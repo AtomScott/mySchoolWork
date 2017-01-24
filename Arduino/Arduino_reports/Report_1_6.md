@@ -20,54 +20,54 @@ long ldt = 0;
 long dd = 0;
 
 void setup(){
-   Serial.begin(9600);
-   pinMode(SW, INPUT);
-   Serial.println("Using textbook");
-   Serial.println("Count, Time");
+        Serial.begin(9600);
+        pinMode(SW, INPUT);
+        Serial.println("Using textbook");
+        Serial.println("Count, Time");
 }
 
 void loop(){
 
-  swnow = digitalRead(SW);
-  if(swlast == LOW && swnow == HIGH){
-    //delay(50);　
-    int now = millis();
-    if((now-ldt)>dd){
-      onPress();
-    }
-    ldt = now;
-  }
-  swlast = swnow;
+        swnow = digitalRead(SW);
+        if(swlast == LOW && swnow == HIGH) {
+                //delay(50);　
+                int now = millis();
+                if((now-ldt)>dd) {
+                        onPress();
+                }
+                ldt = now;
+        }
+        swlast = swnow;
 }
 
 void onPress(){
-  Serial.print(++count);  
-  Serial.print("  ");
-  time = micros();
-  Serial.print(time);
-  Serial.print("\n");
-}    
-    ldt = now;
-  }
-  swlast = swnow;
+        Serial.print(++count);
+        Serial.print("  ");
+        time = micros();
+        Serial.print(time);
+        Serial.print("\n");
+}
+ldt = now;
+}
+swlast = swnow;
 }
 
 
 void onPress(){
-  switch(state++ % 3){   
-   case 0:
-     digitalWrite(gre, HIGH);
-     digitalWrite(red, LOW);
-     break;
-   case 1:
-     digitalWrite(yel, HIGH);
-     digitalWrite(gre, LOW);
-     break;
-   case 2:
-     digitalWrite(red, HIGH);
-     digitalWrite(yel, LOW);
-     break;
-  }
+        switch(state++ % 3) {
+        case 0:
+                digitalWrite(gre, HIGH);
+                digitalWrite(red, LOW);
+                break;
+        case 1:
+                digitalWrite(yel, HIGH);
+                digitalWrite(gre, LOW);
+                break;
+        case 2:
+                digitalWrite(red, HIGH);
+                digitalWrite(yel, LOW);
+                break;
+        }
 
 }
 ```
