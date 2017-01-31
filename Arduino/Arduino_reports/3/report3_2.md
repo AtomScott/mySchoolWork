@@ -186,7 +186,7 @@ void loop (){
 ###### 太陽電池からの入力電圧の違いによって，どのように音の高さ（ピッチ）が変わるようにしたか
 * 太陽電池に当たる光量を変化させた時に，それに伴って圧電スピーカから聞こえる音の高さが変化する
 シリアルモニターに太陽光の入力電圧を表示し，その結果を以下のヒストグラムにまとめた．
-![alt text]( https://github.com/AtomScott/mySchoolWork/blob/master/Arduino/Arduino_reports/3/histogram1.png  "Histogram")
+![alt text]( https://github.com/AtomScott/mySchoolWork/blob/master/Arduino/Arduino_reports/3/Histogram1.png  "Histogram")
 一つめのプログラムでは，入力電圧を音の周波数として，そのままスピーカーに出力したため，入力電圧があまりにも低くなると聞こえなくなることがあった．またヒストグラムから分かる通り，160hzの音の出力が最も大きかった．
 
 * 太陽電池に当たる光量を変えた時に発生する電圧の変化を確認し、，それに応じて音の高さが，おおよそ楽器の高さの幅になるようにパラメータを調節し，音の高さが変化する
