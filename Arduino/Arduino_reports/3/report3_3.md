@@ -10,69 +10,10 @@
 2. ドレミファソラシドを続けて再生するような，スケッチを作成
 3. 簡単な曲を演奏する
 ####3.	プログラム
-1.太陽電池に当たる光量を変化させた時に，それに伴って圧電スピーカから聞こえる音の高さが変化するプログラム。
- ```C
-//−−−−− 実験課題3-2 −−−−−−−
-int G=392;
-int Gs=415.;
-int A=440;
-int As=466;
-int B=494.;
-int C=523;
-int Cs=554;
-int D=587;
-int Ds=622;
-int E=659;
-int F=698;
-int Fs=740;
+1. ドレミの音階を任意の長さだけ再生できるようなスケッチを作成
+```C
 
-int B16 = 125;
-int B8 = B16 * 2;
-int B4 = B16 * 4;
-int B2 = B16 * 8;
-
-int sensVal;
-
-//pins
-int speaker = 13;
-int sensorPin = 1;
-
-void sound (int hz){
-        int tone_delay = 1/(hz*2)*1000000;
-        tone_delay = hz;
-        digitalWrite(speaker,HIGH);
-        delayMicroseconds(tone_delay);
-        digitalWrite(speaker,LOW);
-        delayMicroseconds(tone_delay);
-}
-
-void play (int tone, int length){
-        unsigned long tone_end_time;
-        tone_end_time = millis() + length;
-        while (millis() < tone_end_time) {
-                sound(tone);
-        }
-}
-
-void yasumi (int length){
-        delay(length);
-}
-
-void setup (){
-        pinMode(speaker,OUTPUT);
-        Serial.begin(9600);
-}
-
-void loop (){
-        sensVal = analogRead(sensorPin);
-        Serial.println(sensVal);
-        play(sensVal, B4);
-}
- ```
-2.太陽電池に当たる光量を変えた時に発生する電圧の変化を確認し、それに応じて音の高さが、おおよそ楽器の高さの幅になるようにパラメータを調節し，音の高さが変化する
-```c
-
-//−−−−− 実験課題3-2 −−−−−−−
+//−−−−− 実験課題3-3 −−−−−−−
 int G=392;
 int Gs=415.;
 int A=440;
@@ -98,45 +39,44 @@ int speaker = 13;
 int sensorPin = 1;
 
 void sound (int hz){
-        hz = (hz-50)/10;
- 
+
         switch (hz) {
         case 1:
                 hz=G;
-                    break;
+                break;
         case 2:
                 hz=Gs;
-                    break;
+                break;
         case 3:
                 hz=A;
-                    break;
+                break;
         case 4:
                 hz=As;
-                    break;
+                break;
         case 5:
                 hz=B;
-                    break;
+                break;
         case 6:
                 hz=C;
-                    break;
+                break;
         case 7:
                 hz=Cs;
-                    break;
+                break;
         case 8:
                 hz=D;
-                    break;
+                break;
         case 9:
                 hz=Ds;
-                    break;
+                break;
         case 10:
                 hz=E;
-                    break;
+                break;
         case 11:
                 hz=F;
-                    break;
+                break;
         case 12:
                 hz=Fs;
-                    break;
+                break;
 
         default:
                 return;
@@ -168,28 +108,252 @@ void setup (){
 }
 
 void loop (){
-
-        sensVal = analogRead(sensorPin);
-               Serial.println(sensVal);
-        play(sensVal, B4);
+        //playの引数に任意の音程，長さを入力することができる．
+        //ここではすべての音を繰り返し，鳴らすようにしている．
+        for(int val=0; val <11; val++) {
+                play(val, B4);
+                delay(100);
+        }
 }
+
+```
+2. ドレミファソラシドを続けて再生するような，スケッチを作成
+```C
+
+//−−−−− 実験課題3-3 −−−−−−−
+int G=392;
+int Gs=415.;
+int A=440;
+int As =466;
+int B=494.;
+int C=523;
+int Cs =554;
+int D=587;
+int Ds =622;
+int E=659;
+int F=698;
+int Fs =740;
+
+int B16 = 125;
+int B8 = B16 * 2;
+int B4 = B16 * 4;
+int B2 = B16 * 8;
+
+int sensVal;
+
+//pins
+int speaker = 13;
+int sensorPin = 1;
+
+void sound (int hz){
+
+        switch (hz) {
+        case 1:
+                hz=G;
+                break;
+        case 2:
+                hz=Gs;
+                break;
+        case 3:
+                hz=A;
+                break;
+        case 4:
+                hz=As;
+                break;
+        case 5:
+                hz=B;
+                break;
+        case 6:
+                hz=C;
+                break;
+        case 7:
+                hz=Cs;
+                break;
+        case 8:
+                hz=D;
+                break;
+        case 9:
+                hz=Ds;
+                break;
+        case 10:
+                hz=E;
+                break;
+        case 11:
+                hz=F;
+                break;
+        case 12:
+                hz=Fs;
+                break;
+
+        default:
+                return;
+                break;
+        }
+        int tone_delay = 1/(hz*2)*1000000;
+        tone_delay = hz;
+        digitalWrite(speaker,HIGH);
+        delayMicroseconds(tone_delay);
+        digitalWrite(speaker,LOW);
+        delayMicroseconds(tone_delay);
+}
+
+void play (int tone, int length){
+        unsigned long tone_end_time;
+        tone_end_time = millis() + length;
+        while (millis() < tone_end_time) {
+                sound(tone);
+        }
+}
+
+void yasumi (int length){
+        delay(length);
+}
+
+void setup (){
+        pinMode(speaker,OUTPUT);
+        Serial.begin(9600);
+}
+
+void loop (){
+        //playの引数に任意の音程，長さを入力することができる．
+        //ここではすべての音を繰り返し，鳴らすようにしている．
+        for(int val=0; val <11; val++) {
+                play(val, B4);
+        }
+}
+
+```
+3. 簡単な曲を演奏する
+```C
+
+//−−−−− 実験課題3-3 −−−−−−−
+int Gl=392/2;
+int Gsl=415/2;
+int Al=440/2;
+int Asl =466/2;
+int Bl=494/2;
+int Cl=523/2;
+int Csl =554/2;
+int Dl=587/2;
+int Dsl =622/2;
+int El=659/2;
+int Fl=698/2;
+int Fsl =740/2;
+
+int G=392;
+int Gs=415;
+int A=440;
+int As =466;
+int B=494;
+int C=523;
+int Cs =554;
+int D=587;
+int Ds =622;
+int E=659;
+int F=698;
+int Fs =740;
+
+int B16 = 125;
+int B64 = B16/4;
+int B32 = B16/2;
+
+int B8 = B16 * 2;
+int B6 = B16 * 3;
+int B4 = B16 * 4;
+int B3 = B16 * 6;
+int B2 = B16 * 8;
+
+int sensVal;
+
+//pins
+int speaker = 13;
+int sensorPin = 1;
+
+void sound (int hz){
+        int tone_delay = 1/(hz*2)*1000000;
+        tone_delay = hz;
+        digitalWrite(speaker,HIGH);
+        delayMicroseconds(tone_delay);
+        digitalWrite(speaker,LOW);
+        delayMicroseconds(tone_delay);
+}
+
+void play (int tone, int length){
+        unsigned long tone_end_time;
+        tone_end_time = millis() + length;
+        while (millis() < tone_end_time) {
+                sound(tone);
+        }
+}
+
+void yasumi (int length){
+        delay(length);
+}
+
+void setup (){
+        pinMode(speaker,OUTPUT);
+        Serial.begin(9600);
+}
+
+void loop (){
+        //曲の部分．
+        play(El,B8);
+        play(0,B8);
+        play(0,B8);
+        play(El,B8);
+        play(Fsl,B8);
+        play(Gl,B8);
+        play(0,B8);
+        play(C,B8);
+        play(0,B8);
+        play(B,B3);
+        play(B,B2);
+        play(A,B8);
+        play(0,B8);
+        play(0,B8);
+        play(A,B8);
+        play(C,B8);
+        play(B,B4);
+        play(0,B8);
+        play(Gl,B8);
+        play(0,B8);
+        play(El,B3);
+        play(El,B2);
+}
+
 ```
 ####4.	実行結果
-太陽電池の入力電圧に応じて，スピーカーの出力する音を変化させることに成功した．
-
+ドレミの音階を任意の長さだけ再生できるようなスケッチ，ドレミファソラシドを続けて再生するようなスケッチを作成をし，簡単な曲を演奏することができた．
 ####5．考察
-###### 接続の仕方や，どのデジタル出力ピン およびアナログ入力ピンに接続するかのグループでの工夫
-アナログピンに太陽電池を接続し，スピーカーはデジタルピンに接続した．
 
-###### 太陽電池からの入力電圧の違いによって，どのように音の高さ（ピッチ）が変わるようにしたか
-* 太陽電池に当たる光量を変化させた時に，それに伴って圧電スピーカから聞こえる音の高さが変化する
-シリアルモニターに太陽光の入力電圧を表示し，その結果を以下のヒストグラムにまとめた．
-![alt text]( https://github.com/AtomScott/mySchoolWork/blob/master/Arduino/Arduino_reports/3/Histogram1.png  "Histogram")
+* ドレミの音階を任意の長さだけ再生できるようなスケッチを作成
+以下のコードを見ると，valをincrementさせ，繰り返し低い音程から音程をsound()で演奏していることが分かる．
+```C
+void loop (){
+        //playの引数に任意の音程，長さを入力することができる．
+        //ここではすべての音を繰り返し，鳴らすようにしている．
+        for(int val=0; val <11; val++) {
+                play(val, B4);
+                delay(100);
+        }
+}
+```
 
-一つめのプログラムでは，入力電圧を音の周波数として，そのままスピーカーに出力したため，入力電圧があまりにも低くなると聞こえなくなることがあった．またヒストグラムから分かる通り，160hzの音の出力が最も大きかった．
-
-* 太陽電池に当たる光量を変えた時に発生する電圧の変化を確認し、，それに応じて音の高さが，おおよそ楽器の高さの幅になるようにパラメータを調節し，音の高さが変化する
-上のヒストグラムを参考に，入力電圧が10変わる毎に音もそれに応じて変化するようにした．
+* ドレミファソラシドを続けて再生するような，スケッチを作成
+上記のコードからdelay()を消す続けて再生するようになる．
+```C
+void loop (){
+        //playの引数に任意の音程，長さを入力することができる．
+        //ここではすべての音を繰り返し，鳴らすようにしている．
+        for(int val=0; val <11; val++) {
+                play(val, B4);
+                
+        }
+}
+```
+* 簡単な曲を演奏する
+The Gorillaz の Feel Good Inc を再生した．(https://www.youtube.com/watch?v=HyHNuVaZJ-k)
+このときに，ベースラインの楽譜を用いて，楽譜から曲の音程と長さを探した．
 ####6.	参考文献
 「情報科学基礎実験!第2章Arduinoを用いた基礎的な実験」テキスト
 ####7.	謝辞
