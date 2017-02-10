@@ -1,4 +1,16 @@
-```C
+# 3.3 加速度センサの利用
+
+## 1.演習の目的
+
+加速度センサを用いることで、POV（ブレッドボード）を振っている かどうか、および振っている向きを検出することで、できるだけきれいな残像が残るようにする．
+
+## 2.問題解決の方針
+
+加速度センサーの値より，delay()を指定するプログラムを作成する．
+
+## 3.プログラム
+
+```Arduino
 int ledarray[10];
 int picsize = 35;
 int sensor = 0;
@@ -10,7 +22,6 @@ unsigned long time;
 unsigned long ave=0;
 
 char* picture[] = {
-
   "1111111111",
   "1111111111",
   "0000110000",
@@ -52,7 +63,7 @@ char* picture[] = {
 void setup(){
 
   for(int i=0; i<10;i++){
-    ledarray[i] = i+2; 
+    ledarray[i] = i+2;
     pinMode(ledarray[i], OUTPUT);
   }
 
@@ -73,7 +84,7 @@ void loop(){
 
 void display(char* pic){
   delaytime = ave/picsize;
-  
+
   int digits[picsize];
   for(int i = 0; i <10; i++){
     digits[i] = pic[i]-'0';
@@ -81,10 +92,10 @@ void display(char* pic){
 
   for(int i = 0; i <10; i++){
     if(digits[i]==0){
-      digitalWrite(ledarray[i],LOW); 
+      digitalWrite(ledarray[i],LOW);
     }
     else if(digits[i]==1){
-      digitalWrite(ledarray[i],HIGH); 
+      digitalWrite(ledarray[i],HIGH);
     }
   }
 
@@ -138,7 +149,39 @@ for(int i=9; i>-1; i--){
 Serial.println(ave);
 
 }
-
-
-
 ```
+
+## 4.実行結果
+
+加速度センサーをもとにしたデータより，delay()の時間を指定できるようにした．
+
+
+## 5.考察
+
+表示する工夫として，display()関数を作成した．
+
+```arduino
+int picsize = 35;
+char* picture[] = {
+"1111111111",
+....  //省略
+"1111111111",
+}
+
+void display(char* pic){
+  int digits[picsize];
+  for(int i = 0; i <10; i++){
+   digits[i] = pic[i]-'0';
+   Serial.print(digits[i]);
+  }
+```
+
+上記のコードが示すように，Stringがcharの配列であることを用いて，できるだけ簡単にどのledをつければよいのかを指定した．
+
+## 6.参考文献
+
+「情報科学基礎実験!第2章Arduinoを用いた基礎的な実験」テキスト
+
+## 7.謝辞
+
+この実験をレポートとして形にすることが出来たのは、ペアの杉崎さん、TAの皆様に協力していただいたおかげです｡ 協力していただいた皆様へ心から感謝の気持ちと御礼を申し上げたく、謝辞にかえさせていただきます｡
