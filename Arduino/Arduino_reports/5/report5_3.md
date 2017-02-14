@@ -1,3 +1,4 @@
+```C
 #include <Sprite.h>
 #include <Matrix.h>
 
@@ -45,3 +46,4 @@ void loop() {
   if (x == 16) x = 0;
   x++;
 }
+```
